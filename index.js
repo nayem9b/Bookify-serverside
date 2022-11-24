@@ -18,6 +18,9 @@ const usersCollection = client.db("users").collection("signedUsers");
 const sellerAddedProductCollection = client
   .db("users")
   .collection("addedProduct");
+const AdvertisedProductCollection = client
+  .db("users")
+  .collection("advertisedProduct");
 
 const verifyAdmin = async (req, res, next) => {
   const decodedEmail = req.decoded.email;
@@ -75,6 +78,25 @@ app.post("/addedProducts", async (req, res) => {
   const product = req.body;
   const result = await sellerAddedProductCollection.insertOne(product);
   res.send(result);
+});
+// Get all product that seller has posted
+app.get("/myproducts", async (req, res) => {
+  const query = {};
+  const products = await sellerAddedProductCollection.find(query).toArray();
+  res.send(products);
+});
+// Advertise the product
+app.get("/myproduct/:id", async (req, res) => {
+  const productid = req.params.id;
+  const query = { _id: ObjectId(productid) };
+  const singleProduct = await sellerAddedProductCollection.findOne(query);
+  res.send(singleProduct);
+});
+app.post("/myproduct/:id", async (req, res) => {
+  const productid = req.params.id;
+  const query = { _id: ObjectId(productid) };
+  const singleProduct = await AdvertisedProductCollection.insertOne(query);
+  res.send(singleProduct);
 });
 app.listen(port, () => {
   console.log(`port is running on ${port}`);
