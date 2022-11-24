@@ -15,6 +15,9 @@ const cat1 = client.db("BookCategory").collection("Action and Adventure");
 const cat2 = client.db("BookCategory").collection("Classics");
 const cat3 = client.db("BookCategory").collection("Memoir");
 const usersCollection = client.db("users").collection("signedUsers");
+const sellerAddedProductCollection = client
+  .db("users")
+  .collection("addedProduct");
 
 const verifyAdmin = async (req, res, next) => {
   const decodedEmail = req.decoded.email;
@@ -65,6 +68,13 @@ app.get("/users/admin/:email", async (req, res) => {
   const query = { email };
   const user = await usersCollection.findOne(query);
   res.send({ isAdmin: user?.role === "admin" });
+});
+
+// Post a product
+app.post("/addedProducts", async (req, res) => {
+  const product = req.body;
+  const result = await sellerAddedProductCollection.insertOne(product);
+  res.send(result);
 });
 app.listen(port, () => {
   console.log(`port is running on ${port}`);
