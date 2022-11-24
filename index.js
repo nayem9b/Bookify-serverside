@@ -93,8 +93,7 @@ app.get("/myproduct/:id", async (req, res) => {
   res.send(singleProduct);
 });
 app.post("/myproduct/:id", async (req, res) => {
-  const productid = req.params.id;
-  const query = { _id: ObjectId(productid) };
+  const query = {};
   const singleProduct = await AdvertisedProductCollection.insertOne(query);
   res.send(singleProduct);
 });
