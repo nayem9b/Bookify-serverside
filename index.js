@@ -93,8 +93,8 @@ app.get("/myproduct/:id", async (req, res) => {
   res.send(singleProduct);
 });
 app.post("/myproduct/:id", async (req, res) => {
-  const query = {};
-  const singleProduct = await AdvertisedProductCollection.insertOne(query);
+  const product = req.body;
+  const singleProduct = await AdvertisedProductCollection.insertOne(product);
   res.send(singleProduct);
 });
 app.listen(port, () => {
