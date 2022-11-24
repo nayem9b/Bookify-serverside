@@ -14,7 +14,20 @@ const client = new MongoClient(uri);
 const cat1 = client.db("BookCategory").collection("Action and Adventure");
 const cat2 = client.db("BookCategory").collection("Classics");
 const cat3 = client.db("BookCategory").collection("Memoir");
-const users = client.db("users").collection("signedUsers");
+const usersCollection = client.db("users").collection("signedUsers");
+
+const verifyAdmin = async (req, res, next) => {
+  const decodedEmail = req.decoded.email;
+  const query = { email: decodedEmail };
+  const user = await usersCollection.findOne(query);
+  if (user?.role !== "admin") {
+    return res.status(403).send({
+      message: "forbidden access",
+    });
+  }
+  next();
+};
+
 app.get("/cat1", async (req, res) => {
   const query = {};
   const cursor = cat1.find(query);
@@ -36,10 +49,23 @@ app.get("/cat3", async (req, res) => {
 
 app.post("/userInfo", async (req, res) => {
   const userInfo = req.body;
-  const result = await users.insertOne(userInfo);
+  const result = await usersCollection.insertOne(userInfo);
   res.send(result);
 });
+// Get all the users
+app.get("/users", async (req, res) => {
+  const query = {};
+  const users = await usersCollection.find(query).toArray();
+  res.send(users);
+});
 
+// Get admin
+app.get("/users/admin/:email", async (req, res) => {
+  const email = req.params.email;
+  const query = { email };
+  const user = await usersCollection.findOne(query);
+  res.send({ isAdmin: user?.role === "admin" });
+});
 app.listen(port, () => {
   console.log(`port is running on ${port}`);
 });
