@@ -12,6 +12,7 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@clu
 
 const client = new MongoClient(uri);
 const books = client.db("Books").collection("CategoryBooks");
+const bookingCollection = client.db("Books").collection("Booking");
 const usersCollection = client.db("users").collection("signedUsers");
 const sellerAddedProductCollection = client
   .db("users")
@@ -68,6 +69,13 @@ app.get("/users", async (req, res) => {
   const query = {};
   const users = await usersCollection.find(query).toArray();
   res.send(users);
+});
+
+// Post the bookings
+app.post("/booking", async (req, res) => {
+  const bookingInfo = req.body;
+  const booking = await bookingCollection.insertOne(bookingInfo);
+  res.send(booking);
 });
 
 // Get admin
