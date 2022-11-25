@@ -72,6 +72,12 @@ app.get("/users/admin/:email", async (req, res) => {
   const user = await usersCollection.findOne(query);
   res.send({ isAdmin: user?.role === "admin" });
 });
+// Get all Sellers
+app.get("/users/sellers", async (req, res) => {
+  const query = { role };
+  const user = await usersCollection.find(query);
+  res.send(user);
+});
 
 // Get Buyer
 app.get("/users/buyer/:email", async (req, res) => {
@@ -79,6 +85,13 @@ app.get("/users/buyer/:email", async (req, res) => {
   const query = { email };
   const user = await usersCollection.findOne(query);
   res.send({ isBuyer: user?.role === "Buyer" });
+});
+// Get Seller
+app.get("/users/seller/:email", async (req, res) => {
+  const email = req.params.email;
+  const query = { email };
+  const user = await usersCollection.findOne(query);
+  res.send({ isSeller: user?.role === "Seller" });
 });
 
 // Post a product
