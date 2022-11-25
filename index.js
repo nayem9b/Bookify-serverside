@@ -72,10 +72,14 @@ app.get("/users/admin/:email", async (req, res) => {
   const user = await usersCollection.findOne(query);
   res.send({ isAdmin: user?.role === "admin" });
 });
-// Get all Sellers
+// Find all the sellers
 app.get("/users/sellers", async (req, res) => {
-  const query = { role };
-  const user = await usersCollection.find(query);
+  const user = await usersCollection.find({ role: "Seller" }).toArray();
+  res.send(user);
+});
+// Find all the sellers
+app.get("/users/buyers", async (req, res) => {
+  const user = await usersCollection.find({ role: "Buyer" }).toArray();
   res.send(user);
 });
 
