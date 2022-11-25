@@ -11,9 +11,7 @@ app.use(express.json());
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.dafmrk2.mongodb.net/?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri);
-const cat1 = client.db("BookCategory").collection("Action and Adventure");
-const cat2 = client.db("BookCategory").collection("Classics");
-const cat3 = client.db("BookCategory").collection("Memoir");
+const books = client.db("Books").collection("CategoryBooks");
 const usersCollection = client.db("users").collection("signedUsers");
 const sellerAddedProductCollection = client
   .db("users")
@@ -34,25 +32,32 @@ const verifyAdmin = async (req, res, next) => {
   next();
 };
 
-app.get("/cat1", async (req, res) => {
-  const query = {};
-  const cursor = cat1.find(query);
-  const allCat1Books = await cursor.toArray();
-  res.send(allCat1Books);
+app.get("/category/action_and_adventure", async (req, res) => {
+  const action_and_adventure = await books
+    .find({ category: "Action_and_Adventure" })
+    .toArray();
+  res.send(action_and_adventure);
 });
-app.get("/cat2", async (req, res) => {
-  const query = {};
-  const cursor = cat2.find(query);
-  const allCat2Books = await cursor.toArray();
-  res.send(allCat2Books);
+app.get("/category/classics", async (req, res) => {
+  const classics = await books
+    .find({
+      category: "Classics",
+    })
+    .toArray();
+  res.send(classics);
 });
-app.get("/cat3", async (req, res) => {
-  const query = {};
-  const cursor = cat3.find(query);
-  const allCat3Books = await cursor.toArray();
-  res.send(allCat3Books);
+app.get("/category/memoir", async (req, res) => {
+  const memoir = await books
+    .find({
+      category: "Memoir",
+    })
+    .toArray();
+  res.send(memoir);
 });
-
+// app.get("/users/sellers", async (req, res) => {
+//   const user = await usersCollection.find({ role: "Seller" }).toArray();
+//   res.send(user);
+// });
 app.post("/userInfo", async (req, res) => {
   const userInfo = req.body;
   const result = await usersCollection.insertOne(userInfo);
@@ -109,6 +114,14 @@ app.delete("/users/:id", async (req, res) => {
 app.post("/addedProducts", async (req, res) => {
   const product = req.body;
   const result = await sellerAddedProductCollection.insertOne(product);
+  res.send(result);
+});
+// Delete a product from MyProducts
+app.delete("/myproducts/:id", async (req, res) => {
+  const { id } = req.params;
+  const result = await sellerAddedProductCollection.deleteOne({
+    _id: ObjectId(id),
+  });
   res.send(result);
 });
 // Get all product that seller has posted
