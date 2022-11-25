@@ -83,19 +83,26 @@ app.get("/users/buyers", async (req, res) => {
   res.send(user);
 });
 
-// Get Buyer
+// Check if its Buyer
 app.get("/users/buyer/:email", async (req, res) => {
   const email = req.params.email;
   const query = { email };
   const user = await usersCollection.findOne(query);
   res.send({ isBuyer: user?.role === "Buyer" });
 });
-// Get Seller
+// Check if its Seller
 app.get("/users/seller/:email", async (req, res) => {
   const email = req.params.email;
   const query = { email };
   const user = await usersCollection.findOne(query);
   res.send({ isSeller: user?.role === "Seller" });
+});
+
+// delete perticular user
+app.delete("/users/:id", async (req, res) => {
+  const { id } = req.params;
+  const result = await usersCollection.deleteOne({ _id: ObjectId(id) });
+  res.send(result);
 });
 
 // Post a product
