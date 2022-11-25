@@ -78,6 +78,11 @@ app.post("/booking", async (req, res) => {
   const booking = await bookingCollection.insertOne(bookingInfo);
   res.send(booking);
 });
+// Get the booked items
+app.get("/booking", async (req, res) => {
+  const booked = await bookingCollection.find({}).toArray();
+  res.send(booked);
+});
 // Post the item in the wishlist
 app.post("/wishlist", async (req, res) => {
   const wishlistInfo = req.body;
