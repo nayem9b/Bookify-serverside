@@ -13,6 +13,7 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@clu
 const client = new MongoClient(uri);
 const books = client.db("Books").collection("CategoryBooks");
 const bookingCollection = client.db("Books").collection("Booking");
+const wishlistCollection = client.db("Books").collection("wishList");
 const usersCollection = client.db("users").collection("signedUsers");
 const sellerAddedProductCollection = client
   .db("users")
@@ -77,7 +78,18 @@ app.post("/booking", async (req, res) => {
   const booking = await bookingCollection.insertOne(bookingInfo);
   res.send(booking);
 });
+// Post the item in the wishlist
+app.post("/wishlist", async (req, res) => {
+  const wishlistInfo = req.body;
+  const wishlist = await wishlistCollection.insertOne(wishlistInfo);
+  res.send(wishlist);
+});
 
+// Get the item from wishlist
+app.get("/wishlist", async (req, res) => {
+  const wishes = await wishlistCollection.find({}).toArray();
+  res.send(wishes);
+});
 // Get admin
 app.get("/users/admin/:email", async (req, res) => {
   const email = req.params.email;
