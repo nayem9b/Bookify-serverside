@@ -92,7 +92,15 @@ app.post("/wishlist", async (req, res) => {
 
 // Get the item from wishlist
 app.get("/wishlist", async (req, res) => {
-  const wishes = await wishlistCollection.find({}).toArray();
+  let query = {};
+  if (req.query.email) {
+    query = {
+      email: req.query.email,
+    };
+  }
+  const cursor = wishlistCollection.find(query);
+
+  const wishes = await cursor.toArray();
   res.send(wishes);
 });
 // Get admin
