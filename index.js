@@ -157,6 +157,15 @@ app.delete("/myproducts/:id", async (req, res) => {
   });
   res.send(result);
 });
+
+// Delete a product from Advertised items
+app.delete("/advertised/:id", async (req, res) => {
+  const { id } = req.params;
+  const result = await AdvertisedProductCollection.deleteOne({
+    _id: ObjectId(id),
+  });
+  res.send(result);
+});
 // Get all product that seller has posted
 app.get("/myproducts", async (req, res) => {
   let query = {};
