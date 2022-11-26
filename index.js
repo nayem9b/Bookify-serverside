@@ -151,8 +151,14 @@ app.delete("/myproducts/:id", async (req, res) => {
 });
 // Get all product that seller has posted
 app.get("/myproducts", async (req, res) => {
-  const query = {};
-  const products = await sellerAddedProductCollection.find(query).toArray();
+  let query = {};
+  if (req.query.email) {
+    query = {
+      email: req.query.email,
+    };
+  }
+  const cursor = sellerAddedProductCollection.find(query);
+  const products = await cursor.toArray();
   res.send(products);
 });
 // Advertise the product
