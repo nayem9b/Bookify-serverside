@@ -181,6 +181,12 @@ app.post("/myproduct/:id", async (req, res) => {
   const singleProduct = await AdvertisedProductCollection.insertOne(product);
   res.send(singleProduct);
 });
+app.get("/advertised", async (req, res) => {
+  const advertisedProduct = await AdvertisedProductCollection.find(
+    {}
+  ).toArray();
+  res.send(advertisedProduct);
+});
 app.listen(port, () => {
   console.log(`port is running on ${port}`);
 });
