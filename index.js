@@ -135,6 +135,13 @@ app.get("/users/seller/:email", async (req, res) => {
   const user = await usersCollection.findOne(query);
   res.send({ isSeller: user?.role === "Seller" });
 });
+// Get a perticular user
+app.get("/users/singleuser/:email", async (req, res) => {
+  const email = req.params.email;
+  const query = { email };
+  const user = await usersCollection.findOne(query);
+  res.send(user);
+});
 
 // delete perticular user
 app.delete("/users/:id", async (req, res) => {
@@ -142,6 +149,13 @@ app.delete("/users/:id", async (req, res) => {
   const result = await usersCollection.deleteOne({ _id: ObjectId(id) });
   res.send(result);
 });
+// // Get perticular user
+// app.get("/users/:id", async (req, res) => {
+//   const email = req.params.email;
+//   const query = { email };
+//   const result = await usersCollection.findOne(query);
+//   res.send(result);
+// });
 
 // Post a product
 app.post("/addedProducts", async (req, res) => {
