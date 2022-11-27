@@ -1,14 +1,17 @@
 [
   {
-    "name": "haleem",
-    "price": 45
+    "name": "Action and Adventure",
+    "description": "resale books under Action and Adventure category",
+    "to": "/category/action_and_adventure"
   },
   {
-    "name": "john doe",
-    "price": 45
+    "name": "Classics",
+    "description": "resale books under Classics category",
+    "to": "/category/classics"
   },
   {
-    "name": "illi billish",
-    "price": 45
+    "name": "Memoir",
+    "description": "resale books under Memoir category",
+    "to": "/category/memoir"
   }
 ]

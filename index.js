@@ -22,6 +22,7 @@ const AdvertisedProductCollection = client
   .db("users")
   .collection("advertisedProduct");
 
+const categoryCollection = client.db("Category").collection("Catagories3cards");
 const verifyAdmin = async (req, res, next) => {
   const decodedEmail = req.decoded.email;
   const query = { email: decodedEmail };
@@ -34,28 +35,42 @@ const verifyAdmin = async (req, res, next) => {
   next();
 };
 
-app.get("/category/action_and_adventure", async (req, res) => {
-  const action_and_adventure = await books
-    .find({ category: "Action_and_Adventure" })
-    .toArray();
-  res.send(action_and_adventure);
+// Categories 3 card fetch
+app.get("/category", async (req, res) => {
+  const category = await categoryCollection.find({}).toArray();
+  res.send(category);
 });
-app.get("/category/classics", async (req, res) => {
-  const classics = await books
-    .find({
-      category: "Classics",
-    })
-    .toArray();
-  res.send(classics);
+// Get a perticular Category related books
+app.get("/category/:category", async (req, res) => {
+  const category = req.params.category;
+  console.log(category);
+  const query = { category: category };
+  console.log(query);
+  const resaleBooks = await books.find(query).toArray();
+  res.send(resaleBooks);
 });
-app.get("/category/memoir", async (req, res) => {
-  const memoir = await books
-    .find({
-      category: "Memoir",
-    })
-    .toArray();
-  res.send(memoir);
-});
+// app.get("/category/action_and_adventure", async (req, res) => {
+//   const action_and_adventure = await books
+//     .find({ category: "Action_and_Adventure" })
+//     .toArray();
+//   res.send(action_and_adventure);
+// });
+// app.get("/category/classics", async (req, res) => {
+//   const classics = await books
+//     .find({
+//       category: "Classics",
+//     })
+//     .toArray();
+//   res.send(classics);
+// });
+// app.get("/category/memoir", async (req, res) => {
+//   const memoir = await books
+//     .find({
+//       category: "Memoir",
+//     })
+//     .toArray();
+//   res.send(memoir);
+// });
 // app.get("/users/sellers", async (req, res) => {
 //   const user = await usersCollection.find({ role: "Seller" }).toArray();
 //   res.send(user);
@@ -175,9 +190,11 @@ app.delete("/myproducts/:id", async (req, res) => {
 // Delete a product from Advertised items
 app.delete("/advertised/:id", async (req, res) => {
   const { id } = req.params;
-  const result = await AdvertisedProductCollection.deleteOne({
+  console.log(id, req.params);
+  const result = await sellerAddedProductCollection.deleteOne({
     _id: ObjectId(id),
   });
+  console.log(result);
   res.send(result);
 });
 // Get all product that seller has posted

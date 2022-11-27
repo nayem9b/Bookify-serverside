@@ -7,7 +7,7 @@
     "original_price": 200,
     "years_of_use": "2 years",
     "posted_time": " 25 November, 2022",
-    "category": "Action_and_Adventure"
+    "category": "action_and_adventure"
   },
   {
     "name": "The three musketeers",
@@ -17,7 +17,7 @@
     "original_price": 300,
     "years_of_use": "2 years",
     "posted_time": " 27 November, 2022",
-    "category": "Action_and_Adventure"
+    "category": "action_and_adventure"
   },
   {
     "name": "The Alchemist",
@@ -27,7 +27,7 @@
     "original_price": 200,
     "years_of_use": "1 year",
     "posted_time": " 27 November, 2022",
-    "category": "Action_and_Adventure"
+    "category": "action_and_adventure"
   },
   {
     "name": "Do epic shit",
@@ -37,7 +37,7 @@
     "original_price": 200,
     "years_of_use": "1 years",
     "posted_time": " 28 November, 2022",
-    "category": "Classics"
+    "category": "classics"
   },
   {
     "name": "The Subtle Art of not Giving a Fuck",
@@ -47,7 +47,7 @@
     "original_price": 200,
     "years_of_use": "1 years",
     "posted_time": " 26 November, 2022",
-    "category": "Classics"
+    "category": "classics"
   },
   {
     "name": "Sapiens",
@@ -57,7 +57,7 @@
     "original_price": 100,
     "years_of_use": "1 years",
     "posted_time": " 25 November, 2022",
-    "category": "Classics"
+    "category": "classics"
   },
   {
     "name": "Girl decoded",
@@ -67,7 +67,7 @@
     "original_price": 200,
     "years_of_use": "2 years",
     "posted_time": " 25 November, 2022",
-    "category": "Memoir"
+    "category": "memoir"
   },
   {
     "name": "Becoming",
@@ -77,7 +77,7 @@
     "original_price": 300,
     "years_of_use": "2 years",
     "posted_time": " 22 November, 2022",
-    "category": "Memoir"
+    "category": "memoir"
   },
   {
     "name": "Born a crime",
@@ -87,6 +87,6 @@
     "original_price": 300,
     "years_of_use": "1 year",
     "posted_time": " 23 November, 2022",
-    "category": "Memoir"
+    "category": "memoir"
   }
 ]
