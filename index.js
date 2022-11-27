@@ -104,7 +104,20 @@ app.post("/wishlist", async (req, res) => {
   const wishlist = await wishlistCollection.insertOne(wishlistInfo);
   res.send(wishlist);
 });
-
+// Verify seller
+app.patch("/advertised/:id", async (req, res) => {
+  const { id } = req.params;
+  console.log(id, req.body);
+  const result = await AdvertisedProductCollection.updateOne(
+    {
+      _id: ObjectId(id),
+    },
+    {
+      $set: req.body,
+    }
+  );
+  res.send(result);
+});
 // Get the item from wishlist
 app.get("/wishlist", async (req, res) => {
   let query = {};
