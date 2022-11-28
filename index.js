@@ -46,7 +46,7 @@ app.get("/category/:category", async (req, res) => {
   console.log(category);
   const query = { category: category };
   console.log(query);
-  const resaleBooks = await books.find(query).toArray();
+  const resaleBooks = await sellerAddedProductCollection.find(query).toArray();
   res.send(resaleBooks);
 });
 // app.get("/category/action_and_adventure", async (req, res) => {
@@ -105,12 +105,13 @@ app.post("/wishlist", async (req, res) => {
   res.send(wishlist);
 });
 // Verify seller
-app.patch("/advertised/:id", async (req, res) => {
-  const { id } = req.params;
-  console.log(id, req.body);
-  const result = await AdvertisedProductCollection.updateOne(
+app.patch("/advertised/:email", async (req, res) => {
+  const { email } = req.params;
+  console.log(req.body);
+  console.log(email);
+  const result = await sellerAddedProductCollection.updateOne(
     {
-      _id: ObjectId(id),
+      email: email,
     },
     {
       $set: req.body,
